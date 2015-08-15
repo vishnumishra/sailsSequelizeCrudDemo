@@ -23,7 +23,8 @@ module.exports = {
       type: Sequelize.INTEGER
     },
     is_active:{
-      type:Sequelize.BOOLEAN
+      type:Sequelize.BOOLEAN,
+      defaultValue:false
     }
   }
 };

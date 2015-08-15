@@ -111,6 +111,10 @@ module.exports = {
 		try{
 			var phase = req.body.phase;
 			var phaseId;
+			if(!phase){
+				res.json({sucess:false,err:"No phase provided"})
+				return;
+			}
 			async.waterfall([
 	            function(cb) {
 	                getPhaseIdFromName(phase, cb);
@@ -145,8 +149,8 @@ module.exports = {
             })
 		}catch(err){
 	        res.json({
-	            success:true,
-	            userData:results
+	            success:false,
+	            userData:[]
 	        })
 		}
 	}

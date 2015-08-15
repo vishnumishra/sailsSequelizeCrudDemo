@@ -37,17 +37,25 @@ module.exports = {
 			res.json({sucess:false,err:err});
 		})
 	},
-	// ,
-	// update:function(req,res,next){
-	// 	var params = req.body;
-
-	// 	User.update(params,{"where":{"id":req.body.id}})
-	// 	.then(function(result){
-	// 		res.json({sucess:true,data:result});
-	// 	}).catch(function(err){
-	// 		res.json({sucess:false,err:err});
-	// 	})
-	// },
+	update:function(req,res,next){
+		var params = req.body;
+		var locations = params.locations;
+		User.update(params,{"where":{"id":req.body.id}})
+		.then(function(data){
+			try{
+				if(locations.length > 0){
+					   insertOnUserLocations(locations,data.id);
+				 	   res.json({sucess:true,data:data});
+					return;
+				}
+			}catch(err){
+				res.json({sucess:true,data:data,msg:"fk_voilation in location table but user is created"});
+				return;	
+			}
+		}).catch(function(err){
+			res.json({sucess:false,err:err});
+		})
+	},
 	find:function(req,res){
 		var params = req.body;
 		User.findAll(params).then(function(result){
